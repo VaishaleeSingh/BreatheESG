@@ -1,0 +1,26 @@
+Billing_Period,Account_Number,Meter_Number,Facility_Name,Address,Region,Usage,Unit,Total_Charges_GBP,Tariff_Code,Notes
+Jan 2024,ACC-10021,MTR-88401,Manchester Warehouse,14 Industrial Way Manchester M12 4QR,UK,48500,kWh,5820.00,BUS-E1,
+01/2024,ACC-10022,MTR-88402,london head office,1 Kings Cross Road London N1 9AB,GB,62000,kWh,8060.00,BUS-E2,
+2024-01,ACC-10023,MTR-88403,Birmingham Distribution Centre,45 Parkway Birmingham B7 5AA,England,510000,kWh,61200.00,BUS-E1,Suspiciously high - check meter
+January 2024,,MTR-88404,Leeds Office,22 City Square Leeds LS1 2ES,UK,18200,kWh,2366.00,SME-E1,Account number missing
+2024-01-01 to 2024-01-31,ACC-10025,MTR-88405,Glasgow Depot,8 Clyde Street Glasgow G1 4JL,UK,29800,kWh,3576.00,BUS-E1,
+Feb 2024,ACC-10021,MTR-88401,Manchester Warehouse,14 Industrial Way Manchester M12 4QR,UK,51200,kWh,6144.00,BUS-E1,
+02/2024,ACC-10022,MTR-88402, London Head Office ,1 Kings Cross Road London N1 9AB,United Kingdom,58500,kWh,7605.00,BUS-E2,
+2024-02,ACC-10023,MTR-88403,Birmingham distribution centre,45 Parkway Birmingham B7 5AA,England,0.51,MWh,61200.00,BUS-E1,MWh unit - convert to kWh (510000)
+February 2024,,MTR-88404,Leeds Office,22 City Square Leeds LS1 2ES,UK,0,kWh,145.00,SME-E1,Zero usage - standby/fixed charge only
+2024-02-01 to 2024-02-29,ACC-10025,MTR-88405,Glasgow depot,8 Clyde Street Glasgow G1 4JL,UK,27600,kWh,3312.00,BUS-E1,
+Mar 2024,ACC-10021,MTR-88401,Manchester Warehouse,14 Industrial Way Manchester M12 4QR,UK,49100,kWh,5892.00,BUS-E1,
+03/2024,ACC-10022,MTR-88402,London Head Office,1 Kings Cross Road London N1 9AB,GB,63500,kWh,8255.00,BUS-E2,
+2024-03,ACC-10023,MTR-88403,Birminghm Distribution Centre,45 Parkway Birmingham B7 5AA,England,47800,kWh,5736.00,BUS-E1,Typo in facility name
+March 2024,ACC-10024,MTR-88404,Leeds Office,22 City Square Leeds LS1 2ES,UK,19500,kWh,2535.00,SME-E1,Account num recovered
+2024-03-01 to 2024-03-31,ACC-10025,MTR-88405,Glasgow Depot,8 Clyde Street Glasgow G1 4JL,UK,31200,kWh,3744.00,BUS-E1,
+Apr 2024,ACC-10021,MTR-88401,Manchester Warehouse,14 Industrial Way Manchester M12 4QR,UK,-2100,kWh,-252.00,BUS-E1,Credit adjustment - overbilling Q1
+04/2024,ACC-10022,MTR-88402,London Head Office,1 Kings Cross Road London N1 9AB,United Kingdom,59000,kWh,7670.00,BUS-E2,
+2024-04,ACC-10026,MTR-88410,New York Office,350 5th Ave New York NY 10118,US,35000,kWh,4200.00,COM-US1,USD billed as GBP - needs review
+April 2024,,MTR-88404,Leeds office,22 City Square Leeds LS1 2ES,UK,17800,kWh,2314.00,SME-E1,
+2024-04-01 to 2024-04-30,ACC-10025,MTR-88405,Glasgow Depot,8 Clyde Street Glasgow G1 4JL,UK,0,kWh,145.00,BUS-E1,Zero usage - closed for maintenance
+May 2024,ACC-10021,MTR-88401,Manchester Warehouse,14 Industrial Way Manchester M12 4QR,UK,45600,kWh,5472.00,BUS-E1,
+05/2024,ACC-10022,MTR-88402,London Head Office,1 Kings Cross Road London N1 9AB,GB,57000,kWh,7410.00,BUS-E2,
+2024-05,ACC-10027,MTR-88415,Toronto Office,200 Bay Street Toronto ON M5J 2J3,CA,22000,kWh,2640.00,COM-CA1,CAD billed as GBP
+May 2024,ACC-10021,MTR-88401,Manchester Warehouse,14 Industrial Way Manchester M12 4QR,UK,45600,kWh,5472.00,BUS-E1,Duplicate entry
+June 2024,ACC-10023,MTR-88403,Birmingham Distribution Centre,45 Parkway Birmingham B7 5AA,England,46200,kWh,5544.00,BUS-E1,

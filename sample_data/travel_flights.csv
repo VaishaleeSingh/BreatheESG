@@ -1,0 +1,36 @@
+Travel_Date,Employee_ID,Employee_Name,Department,Origin,Destination,Transport_Mode,Travel_Class,Distance,Distance_Unit,Nights_Hotel,Carbon_Offset,Cost_GBP,Project_Code,Notes
+08/01/2024,EMP-1021,Sarah Mitchell,Sales,LHR,JFK,Flight,Business,3459,miles,4,Yes,2850.00,PRJ-201,NYC client visit
+01-15-2024,EMP-1034,James O'Brien,Engineering,Manchester,London,train,Standard,185,miles,0,No,94.50,PRJ-115,Day return
+2024-01-22,EMP-1055,Priya Sharma,Finance,London Heathrow,Dubai,FLIGHT,Biz,3415,miles,2,Y,1920.00,PRJ-301,
+Jan 30 2024,,Liam Fletcher,Operations,Birmingham,Edinburgh,Rail,Standard,292,miles,1,No,187.00,PRJ-115,Employee ID missing
+12/02/2024,EMP-1021,Sarah Mitchell,Sales,New York,LHR,flight,Business,3459,miles,0,,2100.00,PRJ-201,Return leg NYC trip
+02-19-2024,EMP-1067,Aisha Patel,HR,LHR,CDG,Flight,Economy,215,miles,1,Yes,380.00,PRJ-400,Paris HR conference
+2024-02-26,EMP-1034,James O'Brien,Engineering,London,Manchester,Train,Standard,185,miles,0,N,89.00,PRJ-115,
+Feb 14 2024,EMP-1089,Tom Nguyen,Sales,Birmingham,Bristol,Car,,,miles,0,No,58.00,PRJ-202,Distance not recorded
+05/03/2024,EMP-1055,Priya Sharma,Finance,London,Frankfurt,flight,Eco,404,miles,0,Yes,520.00,PRJ-301,Day trip
+03-12-2024,EMP-1102, Charlotte Davies ,Marketing,LHR,BCN,FLIGHT,Premium Economy,712,miles,2,Y,780.00,PRJ-501,Barcelona brand event
+2024-03-19,EMP-1021,Sarah Mitchell,Sales,LHR,ORD,Flight,Business,3950,miles,3,Yes,3100.00,PRJ-201,Chicago pitch
+Mar 27 2024,EMP-1067,Aisha Patel,HR,London,Leeds,train,Standard,,miles,0,,74.00,PRJ-400,Distance missing
+01/04/2024,,David Kim,Engineering,Glasgow,London,Air,Economy,345,miles,1,No,310.00,PRJ-115,Emp ID unknown - check HR
+04-08-2024,EMP-1034,James O'Brien,Engineering,LHR,AMS,Flight,Economy,233,miles,1,Yes,420.00,PRJ-115,Amsterdam supplier visit
+2024-04-15,EMP-1089,Tom Nguyen,Sales,LHR,DXB,flight,Biz,3415,miles,3,Y,2450.00,PRJ-202,Dubai expo
+Apr 22 2024,EMP-1102,Charlotte Davies,Marketing,London,Edinburgh,Rail,1st,393,miles,2,No,312.00,PRJ-501,
+28/04/2024,EMP-1021,Sarah Michell,Sales,JFK,LHR,FLIGHT,Business,3459,miles,0,Yes,2100.00,PRJ-201,Return - note name typo
+04-30-2024,EMP-1055,Priya Sharma,Finance,London,Birmingham,taxi,,,km,0,No,42.00,PRJ-301,Taxi to client site
+2024-05-06,EMP-1120,Ravi Anand,IT,LHR,SIN,Flight,Economy,6764,miles,5,Yes,1890.00,PRJ-600,Singapore systems deployment
+May 13 2024,EMP-1067,Aisha Patel,HR,Paris CDG,London Heathrow,flight,E,215,miles,0,N,295.00,PRJ-400,Return Paris
+20/05/2024,EMP-1034,James O'Brien,Engineering,Manchester,London,train,Standard,185,km,0,No,102.00,PRJ-115,Note: km not miles
+05-27-2024,,Wei Chen,Finance,LHR,HKG,Flight,Business,5994,miles,4,Yes,4200.00,PRJ-301,Employee ID missing
+2024-06-03,EMP-1102,Charlotte Davies,Marketing,London,Madrid,Air,Premium Economy,788,miles,3,Y,920.00,PRJ-501,
+Jun 10 2024,EMP-1089,Tom Nguyen,Sales,LHR,LAX,flight,Biz,5456,miles,4,,3600.00,PRJ-202,Carbon offset field blank
+17/06/2024,EMP-1021,Sarah Mitchell,Sales,Chicago,LHR,FLIGHT,Business,99999,miles,0,Yes,2800.00,PRJ-201,Distance outlier - check
+06-24-2024,EMP-1120,Ravi Anand,IT,Singapore,LHR,Flight,Economy,6764,miles,0,Yes,1750.00,PRJ-600,Return leg
+2024-07-01,EMP-1055,Priya Sharma,Finance,London,Paris,Cab,,,km,0,No,95.00,PRJ-301,Taxi to Eurostar
+Jul 8 2024,EMP-1034,James O'Brien,Engineering,AMS,LHR,flight,Economy,233,miles,0,N,380.00,PRJ-115,Return Amsterdam
+15/07/2024,EMP-1067,Aisha Patel,HR,LHR,ZRH,Flight,Economy,482,miles,1,Yes,510.00,PRJ-400,Zurich HR summit
+07-22-2024,,Hannah Brooks,Marketing,Edinburgh,London,Rail,Standard,393,miles,0,No,168.00,PRJ-501,No Emp ID on expense form
+2024-07-29,EMP-1102,Charlotte Davies,Marketing,LHR,FCO,FLIGHT,Premium Economy,895,miles,2,Y,1050.00,PRJ-501,Rome campaign shoot
+Aug 5 2024,EMP-1021,Sarah Mitchell,Sales,LHR,JFK,flight,Business,3459,miles,3,Yes,2900.00,PRJ-201,
+12/08/2024,EMP-1120,Ravi Anand,IT,London,Birmingham,train,Standard,85,miles,0,,65.00,PRJ-600,
+08-19-2024,EMP-1089,Tom Nguyen,Sales,LAX,LHR,FLIGHT,Biz,5456,miles,0,Y,3400.00,PRJ-202,Return LA
+2024-08-26,EMP-1055,Priya Sharma,Finance,LHR,CDG,Flight,Economy,215,miles,0,No,340.00,PRJ-301,Quick Paris day trip

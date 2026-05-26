@@ -1,0 +1,31 @@
+Document_Date,Vendor_Name,Item_Description,Quantity,UoM,Net_Amount_GBP,Fuel_Type,Cost_Center,GL_Account,Plant,Notes
+15/01/2024,BP Oil UK Ltd,Diesel fuel - HGV fleet,850,L,1105.00,Diesel,CC-1001,742100,PL01,Monthly bulk fill
+01-22-2024,shell uk limited ,Unleaded Petrol - Company Cars,200,litres,310.50,Petrol,CC-1002,742100,PL01,
+2024-01-30,TOTAL ENERGIES,LPG Cylinder Refill,120,kg,198.00,LPG,CC-2001,742200,PL02,Canteen heating
+Jan 15 2024,BP Oil UK Ltd,Gas Oil - Agricultural,99999,L,129998.70,Gas Oil,CC-1001,742100,PL01,POSSIBLE ERROR - check qty
+17/02/2024, Shell UK Limited,Diesel fuel - HGV fleet,920,litres,1196.00,DIESEL,CC-1001,742100,PL01,
+02-05-2024,Certas Energy,  Natural Gas Supply - Feb,3500,m3,2450.00,Natural Gas,CC-3001,742300,PL03,
+2024-02-19,bp oil uk ltd,Petrol - Pool Cars,180,Liters,279.00,petrol,CC-1002,742100,PL02,
+Feb 28 2024,TOTAL ENERGIES,LPG Bulk Tank Refill,500,kg,825.00,LPG,CC-2001,742200,PL02,Q1 top-up
+01/03/2024,Certas Energy,Diesel - Forklift,340,L,442.00,diesel fuel,CC-1003,742100,PL03,
+03-12-2024,Shell UK Limited,Unleaded Petrol,220,gal,1210.00,Petrol,CC-1002,742100,PL01,Gallons - US measure
+2024-03-20,BRITISH GAS,Natural Gas - March,4100,m3,2870.00,NG,CC-3001,742300,PL03,
+Mar 5 2024,bp oil uk ltd,Diesel fuel - HGV fleet,880,L,1144.00,Diesel,CC-1001,742100,PL01,
+22/03/2024,Certas Energy,Gas Oil - Site Generators,450,litres,585.00,Gas Oil,CC-1003,742150,PL03,Standby generators
+03-31-2024,TOTAL ENERGIES,LPG Forklift Cylinders,80,KG,132.00,LPG,CC-1003,742200,PL02,
+2024-04-08,Shell UK Limited,Diesel - HGV ,870,L,1131.00,DIESEL,CC-1001,742100,PL01,
+Apr 15 2024, BP Oil UK Ltd ,Diesel fuel - HGV fleet,880,L,1144.00,Diesel,CC-1001,742100,PL01,Possible duplicate
+15/04/2024,bp oil uk ltd,Diesel fuel - HGV fleet,880,litres,1144.00,Diesel,CC-1001,742100,PL01,Possible duplicate
+04-22-2024,Certas Energy,Petrol - Sales Reps,95,gallons,522.50,petrol,CC-1002,742100,PL02,
+2024-04-30,BRITISH GAS, Natural Gas Supply,3800,m3,2660.00,Natural Gas,CC-3001,742300,PL03,
+May 3 2024,Shell UK Limited,Diesel Fuel,910,L,1183.00,diesel fuel,CC-1001,742100,PL01,
+14/05/2024,TOTAL ENERGIES,LPG - Heating,200,kg,330.00,LPG,CC-2001,742200,PL02,
+05-20-2024,bp oil uk ltd,Unleaded Petrol,160,L,248.00,Petrol,CC-1002,742100,PL01,
+2024-05-28,Certas Energy,Gas Oil - Generator,310,litres,403.00,Gas Oil,CC-1003,742150,PL03,
+Jun 4 2024,Shell UK Limited,Diesel - HGV fleet,855,L,1111.50,DIESEL,CC-1001,742100,PL04,New plant
+18/06/2024,TOTAL ENERGIES,LPG Bulk,480,KG,792.00,LPG,CC-2001,742200,PL02,
+06-25-2024,Certas Energy,Diesel fuel,-50,L,-65.00,Diesel,CC-1001,742100,PL01,Credit note - returned fuel
+2024-06-30,BRITISH GAS,Natural Gas,4200,m3,2940.00,NG,CC-3001,742300,PL03,
+Jul 2 2024, bp oil uk ltd ,Petrol - Company Cars,175,Liters,271.25,petrol,CC-1002,742100,PL02,
+10/07/2024,Shell UK Limited,Diesel fuel - HGV,900,L,1170.00,Diesel,CC-1001,742100,PL01,
+07-18-2024,Certas Energy,Gas Oil,280,litres,364.00,Gas Oil,,742150,PL03,Cost center missing
