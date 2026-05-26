@@ -201,14 +201,14 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
           <p className="text-sm text-slate-500 mt-1">
             Overview of your ESG emissions data
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button
             className="btn-secondary text-sm"
             onClick={() => onNavigate?.('upload')}
