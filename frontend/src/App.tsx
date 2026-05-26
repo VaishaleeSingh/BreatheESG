@@ -279,77 +279,155 @@ interface NavBarProps {
 }
 
 function NavBar({ currentPage, onNavigate, user, onLogout }: NavBarProps) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const initials =
     (user.first_name?.[0] ?? '') + (user.last_name?.[0] ?? '') ||
     user.username[0].toUpperCase();
 
+  const handleNav = (page: Page) => {
+    onNavigate(page);
+    setIsMobileMenuOpen(false);
+  };
+
   return (
-    <header className="bg-white border-b border-cream-200 shadow-sm sticky top-0 z-40">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-        {/* Logo */}
-        <div className="flex items-center gap-2.5 flex-shrink-0">
-          <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
-            <LeafIcon className="w-5 h-5 text-white" />
+    <>
+      <header className="bg-white border-b border-cream-200 shadow-sm sticky top-0 z-40">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+          {/* Mobile Menu Button */}
+          <button 
+            className="sm:hidden p-2 -ml-2 text-slate-500 hover:text-slate-700"
+            onClick={() => setIsMobileMenuOpen(true)}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          {/* Logo */}
+          <div className="flex items-center gap-2.5 flex-shrink-0 flex-1 sm:flex-none justify-center sm:justify-start">
+            <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
+              <LeafIcon className="w-5 h-5 text-white" />
+            </div>
+            <span className="text-lg font-bold text-slate-900 tracking-tight">
+              Breathe <span className="text-teal-500">ESG</span>
+            </span>
           </div>
-          <span className="text-lg font-bold text-slate-900 tracking-tight hidden sm:inline">
-            Breathe <span className="text-teal-500">ESG</span>
-          </span>
+
+          {/* Desktop Nav links */}
+          <nav className="hidden sm:flex items-center gap-1 flex-1 ml-4">
+            <NavLink active={currentPage === 'dashboard'} onClick={() => handleNav('dashboard')}>Dashboard</NavLink>
+            <NavLink active={currentPage === 'upload'} onClick={() => handleNav('upload')}>Upload Data</NavLink>
+            <NavLink active={currentPage === 'review'} onClick={() => handleNav('review')}>Review Records</NavLink>
+          </nav>
+
+          {/* Desktop User */}
+          <div className="hidden sm:flex items-center gap-3">
+            <div className="text-right">
+              <p className="text-sm font-medium text-slate-900 leading-tight">
+                {user.first_name ? `${user.first_name} ${user.last_name}` : user.username}
+              </p>
+              {user.tenant && <p className="text-xs text-slate-500 leading-tight">{user.tenant.name}</p>}
+            </div>
+            <div className="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-sm font-semibold">
+              {initials}
+            </div>
+            <button
+              onClick={onLogout}
+              title="Sign out"
+              className="p-2 rounded-lg text-slate-400 hover:bg-cream-200 hover:text-slate-700 transition-all duration-150"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+            </button>
+          </div>
+          
+          {/* Spacer for mobile to center logo correctly since menu is on left */}
+          <div className="w-6 h-6 sm:hidden"></div>
         </div>
+      </header>
 
-        {/* Nav links */}
-        <nav className="flex items-center gap-1 flex-1 overflow-x-auto no-scrollbar">
-          <NavLink
-            active={currentPage === 'dashboard'}
-            onClick={() => onNavigate('dashboard')}
-          >
-            Dashboard
-          </NavLink>
-          <NavLink
-            active={currentPage === 'upload'}
-            onClick={() => onNavigate('upload')}
-          >
-            Upload Data
-          </NavLink>
-          <NavLink
-            active={currentPage === 'review'}
-            onClick={() => onNavigate('review')}
-          >
-            Review Records
-          </NavLink>
-        </nav>
+      {/* Mobile Sidebar Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/50 z-40 sm:hidden transition-opacity"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
 
-        {/* User */}
-        <div className="flex items-center gap-3">
-          <div className="text-right hidden sm:block">
-            <p className="text-sm font-medium text-slate-900 leading-tight">
-              {user.first_name
-                ? `${user.first_name} ${user.last_name}`
-                : user.username}
-            </p>
-            {user.tenant && (
-              <p className="text-xs text-slate-500 leading-tight">{user.tenant.name}</p>
-            )}
+      {/* Mobile Sidebar */}
+      <div 
+        className={`fixed inset-y-0 left-0 w-64 bg-white shadow-2xl z-50 transform transition-transform duration-200 ease-in-out sm:hidden flex flex-col ${
+          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="p-4 border-b border-cream-200 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
+              <LeafIcon className="w-5 h-5 text-white" />
+            </div>
+            <span className="text-lg font-bold text-slate-900 tracking-tight">
+              Breathe <span className="text-teal-500">ESG</span>
+            </span>
           </div>
-          <div className="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-sm font-semibold">
-            {initials}
-          </div>
-          <button
-            onClick={onLogout}
-            title="Sign out"
-            className="p-2 rounded-lg text-slate-400 hover:bg-cream-200 hover:text-slate-700 transition-all duration-150"
+          <button 
+            className="p-2 text-slate-400 hover:text-slate-600"
+            onClick={() => setIsMobileMenuOpen(false)}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              />
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
+
+        <div className="p-4 flex-1 flex flex-col gap-2">
+          <button 
+            onClick={() => handleNav('dashboard')}
+            className={`flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-colors ${currentPage === 'dashboard' ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-cream-100'}`}
+          >
+            Dashboard
+          </button>
+          <button 
+            onClick={() => handleNav('upload')}
+            className={`flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-colors ${currentPage === 'upload' ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-cream-100'}`}
+          >
+            Upload Data
+          </button>
+          <button 
+            onClick={() => handleNav('review')}
+            className={`flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-colors ${currentPage === 'review' ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-cream-100'}`}
+          >
+            Review Records
+          </button>
+        </div>
+
+        <div className="p-4 border-t border-cream-200 bg-cream-50">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-sm font-bold">
+              {initials}
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-slate-900 leading-tight">
+                {user.first_name ? `${user.first_name} ${user.last_name}` : user.username}
+              </p>
+              {user.tenant && <p className="text-xs text-slate-500 leading-tight mt-0.5">{user.tenant.name}</p>}
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              onLogout();
+            }}
+            className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-lg border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 hover:text-slate-900 transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            Sign out
+          </button>
+        </div>
       </div>
-    </header>
+    </>
   );
 }
 
