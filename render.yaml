@@ -31,7 +31,6 @@ services:
   - type: web
     name: breathe-esg-frontend
     env: static
-    region: oregon
     buildCommand: "npm install && npm run build"
     staticPublishPath: "./dist"
     envVars:
