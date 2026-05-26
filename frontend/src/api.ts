@@ -15,7 +15,7 @@ import type {
 } from './types';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: (import.meta.env.VITE_API_URL || '/api').replace(/\/?$/, '/'),
   withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
 });
@@ -33,30 +33,30 @@ export const authApi = {
   login: async (username: string, password: string): Promise<CurrentUser> => {
     const creds = btoa(`${username}:${password}`);
     sessionStorage.setItem('breathe_auth', creds);
-    const { data } = await api.get<CurrentUser>('/me/');
+    const { data } = await api.get<CurrentUser>('me/');
     return data;
   },
   signup: async (data: SignupData) => {
-    return api.post('/signup/', data).then((r) => r.data);
+    return api.post('signup/', data).then((r) => r.data);
   },
   logout: () => {
     sessionStorage.removeItem('breathe_auth');
   },
-  me: () => api.get<CurrentUser>('/me/').then((r) => r.data),
+  me: () => api.get<CurrentUser>('me/').then((r) => r.data),
 };
 
 export const dashboardApi = {
-  stats: () => api.get<DashboardStats>('/dashboard/').then((r) => r.data),
+  stats: () => api.get<DashboardStats>('dashboard/').then((r) => r.data),
 };
 
 export const jobsApi = {
-  list: () => api.get<IngestionJob[]>('/jobs/').then((r) => r.data),
+  list: () => api.get<IngestionJob[]>('jobs/').then((r) => r.data),
   ingest: (sourceType: string, file: File): Promise<IngestResponse> => {
     const fd = new FormData();
     fd.append('source_type', sourceType);
     fd.append('file', file);
     return api
-      .post<IngestResponse>('/ingest/', fd, {
+      .post<IngestResponse>('ingest/', fd, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       .then((r) => r.data);
@@ -68,22 +68,22 @@ export const recordsApi = {
     const params = Object.fromEntries(
       Object.entries(filters).filter(([, v]) => v !== '' && v !== undefined)
     );
-    return api.get<RecordListResponse>('/records/', { params }).then((r) => r.data);
+    return api.get<RecordListResponse>('records/', { params }).then((r) => r.data);
   },
   detail: (id: string) =>
-    api.get<NormalizedRecordDetail>(`/records/${id}/`).then((r) => r.data),
+    api.get<NormalizedRecordDetail>(`records/${id}/`).then((r) => r.data),
   patch: (id: string, data: Partial<NormalizedRecord>) =>
-    api.patch<NormalizedRecordDetail>(`/records/${id}/`, data).then((r) => r.data),
+    api.patch<NormalizedRecordDetail>(`records/${id}/`, data).then((r) => r.data),
   action: (id: string, action: RecordAction, note?: string) =>
     api
-      .post<NormalizedRecord>(`/records/${id}/action/`, { action, note })
+      .post<NormalizedRecord>(`records/${id}/action/`, { action, note })
       .then((r) => r.data),
   bulkAction: (ids: string[], action: RecordAction, note?: string) =>
     api
-      .post('/records/bulk-action/', { action, record_ids: ids, note })
+      .post('records/bulk-action/', { action, record_ids: ids, note })
       .then((r) => r.data),
   audit: (id: string) =>
-    api.get<AuditLog[]>(`/records/${id}/audit/`).then((r) => r.data),
+    api.get<AuditLog[]>(`records/${id}/audit/`).then((r) => r.data),
 };
 
 export default api;
