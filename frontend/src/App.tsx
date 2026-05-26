@@ -435,7 +435,13 @@ function NavBar({ currentPage, onNavigate, user, onLogout }: NavBarProps) {
 export default function App() {
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [checking, setChecking] = useState(true);
-  const [page, setPage] = useState<Page>('dashboard');
+  const [page, setPage] = useState<Page>(() => {
+    return (sessionStorage.getItem('breathe_page') as Page) || 'dashboard';
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('breathe_page', page);
+  }, [page]);
 
   // Restore session on load
   useEffect(() => {
