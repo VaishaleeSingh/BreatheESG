@@ -147,7 +147,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
           <Skeleton className="h-4 w-72" />
         </div>
         {/* KPI skeletons */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {Array.from({ length: 5 }).map((_, i) => (
             <Skeleton key={i} className="h-28 rounded-2xl" />
           ))}
@@ -231,7 +231,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <KpiCard
           label="Total Records"
           value={fmtNum(s.total_records)}
