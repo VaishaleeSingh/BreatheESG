@@ -378,9 +378,9 @@ function RecordDetailDrawer({ recordId, onClose, onRecordUpdated }: DrawerProps)
             {/* Body - scrollable */}
             <div className="flex-1 overflow-y-auto">
               {/* Data Grid */}
-              <div className="grid grid-cols-2 gap-0 border-b border-cream-200">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border-b border-cream-200">
                 {/* Left: Normalized Data */}
-                <div className="p-5 border-r border-cream-200">
+                <div className="p-5 border-b md:border-b-0 md:border-r border-cream-200">
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                       Normalized Data
