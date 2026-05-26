@@ -78,7 +78,9 @@ npm run dev
 ## 🧪 How to Test the Flow
 
 1. Open **http://localhost:5173** in your browser.
-2. Log in with the test credentials: Username: `analyst`, Password: `breathe2024!`
+2. Log in with the test credentials: 
+   - **Analyst:** Username: `analyst`, Password: `breathe2024!`
+   - **Admin:** Username: `admin`, Password: `breathe2024!`
 3. Go to the **Upload Data** tab.
 4. Click the **SAP Fuel & Procurement** card and upload the `sap_fuel.csv` file (you can find this in the `sample_data/` folder of this project).
 5. Head over to the **Review Records** tab.
