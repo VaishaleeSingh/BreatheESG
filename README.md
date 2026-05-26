@@ -8,6 +8,15 @@ This project is a clean, modern web application designed to take all that messy 
 
 ---
 
+## 🌟 Live Demo
+
+- **Frontend (Web App):** [https://breatheesg-1.netlify.app/](https://breatheesg-1.netlify.app/)
+- **Backend API:** [https://breatheesg-wm7u.onrender.com/api/](https://breatheesg-wm7u.onrender.com/api/)
+
+*(Note: The backend is hosted on a free Render instance, so it may take 30-50 seconds to wake up if you are the first visitor in a while. Test credentials are listed below in the "How to Test" section).*
+
+---
+
 ## 🚀 How It Works (The Big Picture)
 
 1. **Upload**: An analyst drops a messy CSV file (like Fuel, Electricity, or Travel data) into our interface.
