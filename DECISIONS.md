@@ -1,29 +1,28 @@
 # Decisions & Ambiguity Resolution
 
-## 1. Defining "Normalization"
-**Ambiguity**: The prompt states "We need to ingest all of it [SAP, Utilities, Travel], normalize it, and let our analysts review." Normalization can mean schema alignment, or unit conversion, or both.
-**Decision**: I decided normalization must include both schema alignment (mapping custom CSV headers to standard fields like `activity_date` and `activity_value`) AND applying emission factors to convert raw activity into standard `kg CO2e` instantly. 
-**Why**: Analysts shouldn't just be reviewing raw data; they need to see the calculated carbon footprint during review to catch anomalies (e.g., a typo resulting in 10,000 tonnes of CO2).
+While building this prototype, I ran into a few spots where the requirements were a bit ambiguous. Here is a breakdown of how I interpreted them, the choices I made to keep the project moving, and a few things I'd love to chat with the PM about.
 
-## 2. Source Subsets Handled vs. Ignored
-**SAP Fuel & Procurement**:
-- Handled: Fleet fuel consumption (diesel, petrol) by volume (liters/gallons).
-- Ignored: Financial procurement data (spend-based emissions). Spend-based emissions require complex mapping of MCC/SIC codes to EEIO (Environmentally-Extended Input-Output) factors, which is too complex for a prototype.
+### What does "Normalization" actually mean?
+The prompt mentioned we needed to "ingest all of it, normalize it, and let our analysts review." Normalization can mean a lot of things—does it just mean making the column headers match, or does it mean actually doing the carbon math?
 
-**Utility Portals (Electricity)**:
-- Handled: Standard grid electricity consumption measured in kWh.
-- Ignored: Time-of-Use (TOU) and market-based (Renewable Energy Certificates) matching. The prototype calculates strictly on a location-based method.
+I decided that true normalization in this context has to include applying the emission factors to calculate the carbon footprint (`kg CO2e`) instantly. If we just showed analysts the raw gallons of fuel or kWh of electricity without the resulting carbon number, it would be much harder for them to spot anomalies. Seeing a weirdly huge CO2e number is usually the best way to catch a typo in the raw data, so I made sure those calculations happen before the review stage.
 
-**Corporate Travel**:
-- Handled: Flight segments (short-haul, medium-haul, long-haul) measured in passenger-kilometers.
-- Ignored: Hotel stays and rental cars, to focus the prototype exclusively on distance-based flight emissions.
+### Deciding what to handle vs. what to ignore
+Given the 4-day timeline, I had to be strategic about which subsets of the data sources I actually tackled. 
 
-## 3. Data Editing Capabilities
-**Ambiguity**: Should analysts be able to edit the raw data, or only flag it?
-**Decision**: Analysts cannot edit the `RawRecord`, but they *can* edit the `NormalizedRecord` fields (date, value, description) with an automatic audit trail attached.
-**Why**: Real-world data is messy. If an analyst spots a clear typo (e.g., year '2042' instead of '2024'), sending it back to the client delays the process. Allowing audited edits speeds up onboarding while maintaining compliance.
+For **SAP Fuel & Procurement**, I focused strictly on volume-based fleet fuel consumption (like liters of diesel). I completely avoided spend-based procurement data. Mapping financial spend to Environmentally-Extended Input-Output (EEIO) factors is a massive, complex undertaking that felt out of scope for a quick prototype.
 
-## Questions for the PM
-1. **Handling Updates**: "If a client uploads a corrected spreadsheet a week later, should the system attempt to automatically overwrite existing records (via deduplication logic), or append them as new rows and rely on analysts to flag duplicates?"
-2. **Review Workflows**: "Do we need a multi-tier review process (e.g., Junior Analyst drafts -> Senior Analyst approves) before data goes to auditors?"
-3. **Emission Factors**: "Are we licensing emission factor databases like DEFRA/EPA directly into the platform, or will clients provide custom factors they want us to use?"
+For **Utility Portals**, I kept it simple by sticking to standard grid electricity measured in kWh. I ignored things like Time-of-Use (TOU) rates or market-based Renewable Energy Certificates (RECs) because the prototype is built around a standard location-based calculation method.
+
+For **Corporate Travel**, I focused entirely on flight segments (short, medium, and long-haul distances). I intentionally ignored hotel stays and rental car data so I could build a really solid, focused parser just for flights.
+
+### Letting analysts edit data
+Another big ambiguity was whether analysts should just be reviewing and flagging data, or if they should be allowed to actually fix it themselves.
+
+Real-world client data is incredibly messy. If a client accidentally types "2042" instead of "2024", kicking the entire spreadsheet back to them just to fix a typo wastes everyone's time. I decided to allow analysts to directly edit the `NormalizedRecord` fields (like dates, values, and descriptions). However, to ensure we don't break compliance, I made sure that every single edit triggers an automatic, un-deletable entry in the `AuditLog`. This strikes a good balance between speed and security.
+
+### Questions I'd ask the PM
+If we were taking this to production, I'd want to get clarity on a few things:
+1. **Handling re-uploads:** "If a client realizes they made a mistake and uploads a corrected version of their spreadsheet a week later, should the system try to automatically overwrite the old records via deduplication logic? Or do we just append the new rows and rely on the analysts to manually flag the duplicates?"
+2. **Review workflows:** "Do we need a multi-tier review system? For example, does a Junior Analyst draft the corrections, and a Senior Analyst has to sign off before the data is officially marked as 'approved' for auditors?"
+3. **Emission Factor databases:** "Are we planning to license heavy-duty databases like DEFRA or the EPA directly into our platform, or is the expectation that enterprise clients will provide their own custom factors that they want us to use?"

@@ -1,28 +1,27 @@
 # Data Model Architecture
 
-The data model is engineered to support a highly reliable, auditable, and isolated environment for enterprise clients uploading diverse ESG data.
+When I sat down to design the data model for this prototype, my main goal was to make sure it could handle the messy reality of enterprise data without compromising on security or auditability. Here's a breakdown of how the database is structured and the reasoning behind it.
 
-## 1. Multi-Tenancy (`Tenant` and `TenantUser`)
-Every piece of user-generated data in the system is strictly bound to a `Tenant`. 
-- `Tenant`: Represents a single enterprise client (e.g., "Acme Corp").
-- `TenantUser`: Links Django's built-in `User` to a specific `Tenant` and defines their role (e.g., 'analyst').
-- **Why**: Security is paramount. Rather than relying on simple `user_id` foreign keys, binding all data to a Tenant ensures that a user can never accidentally query or modify records belonging to a different enterprise client. All API views filter by the current user's Tenant before any other operations occur.
+### Multi-Tenancy (Keeping Data Isolated)
+The absolute biggest risk in a SaaS platform like this is one client accidentally seeing another client's emissions data. To prevent this, I built strict multi-tenancy into the core of the app. 
 
-## 2. Source-of-Truth Tracking (`IngestionJob` and `RawRecord`)
-We never mutate the original uploaded data.
-- `IngestionJob`: Tracks a single file upload event (who uploaded it, when, what the file was, and its processing status).
-- `RawRecord`: Stores the exact, unmutated JSON representation of a single row from an uploaded file, linked to the `IngestionJob`.
-- **Why**: If an auditor asks "Where did this emissions number come from?", we can trace it back to the exact row in the exact spreadsheet uploaded by a specific user on a specific date. 
+Instead of just linking data to a `user_id`, everything is bound to a `Tenant` (which represents the enterprise client, like "Acme Corp"). Users are linked to a Tenant via a `TenantUser` profile. This means that at the database level, every single query is automatically filtered by the current user's Tenant before anything else happens. It’s a fail-safe way to ensure complete data isolation.
 
-## 3. Normalization & Scopes (`NormalizedRecord`)
-This is the core table where analysts work.
-- Extracts disparate fields from `RawRecord` into a standard schema: `activity_date`, `description`, `location`, `supplier_vendor`.
-- Stores the `activity_value` and `activity_unit` (e.g., 500, "liters").
-- Stores the calculated `calculated_emissions_kg` based on an applied `EmissionFactor`.
-- **Categorization**: Each record is strictly categorized into `Scope 1` (direct fuel), `Scope 2` (purchased electricity), or `Scope 3` (value chain/travel).
+### The Source of Truth 
+One of the core requirements was to track exactly where a piece of data came from. If an auditor asks, "Where did you get this 5,000 liters of diesel from?", we need a solid answer.
 
-## 4. Audit Trail (`AuditLog`)
-Compliance requires strict tracking of analyst actions.
-- Every state change (approving, flagging, rejecting) or field edit (correcting a typo in a location or adjusting a date) automatically generates an `AuditLog` entry.
-- The log records the `performed_by` user, the `action`, the `old_status`, the `new_status`, and a JSON diff of `field_changes`.
-- **Why**: Auditors need to see the exact lifecycle of a record. If an analyst modifies an activity value from 500 to 5000, the system retains the history of who made the change and when, ensuring total transparency.
+To solve this, I split the data ingestion process. When a user uploads a file, the system creates an `IngestionJob` to track the metadata (who uploaded it, what the file was named, and when). Then, the system reads the file and saves the exact, untouched JSON representation of every single row into a `RawRecord` table. 
+
+We never mutate the `RawRecord`. It acts as our permanent, immutable source of truth.
+
+### Normalization & Categorization
+Analysts can't work easily with raw JSON dumps, so the system parses those raw records and extracts the important bits into a standard schema called `NormalizedRecord`. 
+
+This is the table that powers the dashboard and the review screens. It pulls out the `activity_date`, `description`, `location`, and the raw `activity_value`. During this step, the system also applies the appropriate `EmissionFactor` to calculate the final `kg_co2e` footprint on the fly. 
+
+To handle the scoping requirements, the system strictly tags every normalized record as Scope 1 (direct fuels), Scope 2 (electricity), or Scope 3 (travel/supply chain) based on the factor used.
+
+### The Audit Trail
+Finally, compliance and auditing are massive parts of ESG reporting. You can't just let an analyst change a number from 500 to 5,000 without tracking it.
+
+I built an `AuditLog` table that acts as a ledger. Anytime an analyst approves, flags, or edits a field on a normalized record, a new audit entry is generated. It records exactly who made the change, what time they did it, the old status, the new status, and a detailed JSON diff of exactly which fields were altered. This gives auditors complete transparency into the lifecycle of every single emission record.

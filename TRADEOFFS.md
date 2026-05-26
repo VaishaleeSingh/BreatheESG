@@ -1,13 +1,18 @@
 # Tradeoffs
 
-## 1. Synchronous File Processing vs. Asynchronous Celery Queues
-**What was deliberately not built**: I did not implement an asynchronous task queue (like Celery/Redis) to handle file parsing in the background. 
-**Why**: For a 4-day prototype focused on demonstrating normalization and review workflows, the overhead of configuring Redis, Celery workers, and WebSocket infrastructure for real-time frontend progress updates was too high. The current synchronous implementation works well for prototype-scale files (<10,000 rows). In a real deployment with massive SAP exports, this would immediately block the web worker and timeout, necessitating an asynchronous rewrite.
+Building a prototype in 4 days means making some hard choices about what to focus on. To ensure the core data model and the analyst review workflow were bulletproof, I deliberately chose *not* to build three specific things.
 
-## 2. Advanced CSV Mapping & Machine Learning Schemas
-**What was deliberately not built**: I did not build a dynamic CSV mapper UI where users can visually map their custom column headers to our database schema. The parsers are currently hardcoded to expect specific column names.
-**Why**: Building a robust mapping interface (with drag-and-drop or ML-assisted column prediction) is practically an entire product on its own. To meet the deadline, I hardcoded parsers specifically for the provided sample formats. Real-world client data is completely unpredictable, so a production system would absolutely need a dynamic mapping/ingestion layer (e.g., using a service like Flatfile or a custom LLM mapper).
+### 1. Asynchronous Task Queues (Celery/Redis)
+I processed the uploaded CSV files synchronously during the web request. I did not set up a background task queue like Celery or Redis.
 
-## 3. Sophisticated User Role Management (RBAC)
-**What was deliberately not built**: I built basic authentication and Tenant isolation, but I did not build granular Role-Based Access Control (e.g., separating "Data Submitters", "Junior Analysts", "Senior Approvers", and "Auditors").
-**Why**: The prompt prioritized data ingestion, normalization, and review. Implementing a strict permissions matrix would bloat the backend logic and require additional UI screens to manage users. The current assumption is that anyone logged into a Tenant acts as a trusted Analyst. In reality, strict permission boundaries are legally required before external auditors are allowed into the platform.
+**Why:** For a prototype where we're testing with a few dozen or a few hundred rows, synchronous processing is totally fine. But honestly, if this were hitting production and a client uploaded an SAP export with 50,000 rows, the web request would simply time out while trying to parse it. In a real deployment, we would absolutely need to offload the parsing step to an asynchronous worker and push real-time progress updates back to the frontend using WebSockets. I skipped it here because configuring the Redis infrastructure and the WebSocket connections would have eaten up too much of the 4-day timeframe.
+
+### 2. A Dynamic CSV Column Mapper
+Right now, the parsers are somewhat rigid. They expect the uploaded CSV files to have specific headers (like `Usage_kWh` for utilities, or `PostingDate` for SAP). I didn't build a visual interface where users can manually drag and drop their weird custom column names to match our internal database schema.
+
+**Why:** Building a truly robust, user-friendly data mapping interface—especially one that might use Machine Learning to auto-predict column mappings—is basically an entire SaaS product on its own. It's incredibly complex to get right. Since the assignment focused on what happens *after* the data is in the system (the normalization and review process), I hardcoded the parsers to expect the sample data formats. In reality, client data is wildly unpredictable, so a dynamic ingestion layer (perhaps integrating a third-party tool like Flatfile) would be mandatory.
+
+### 3. Granular Role-Based Access Control (RBAC)
+While I built strict Tenant isolation (so Company A can never see Company B's data), I did not build a deep, granular permissions matrix for the users *within* a Tenant. I didn't create distinct roles for "Data Submitters", "Junior Analysts", "Senior Approvers", and "External Auditors".
+
+**Why:** Adding granular RBAC tends to bloat the backend logic significantly. You end up writing dozens of permission-checking decorators and building out admin UI screens just to manage who can click what. I assumed for this prototype that anyone logged into a specific Tenant's workspace acts as a trusted Analyst. Of course, before letting an actual external auditor log into the platform, we'd need strict read-only permission boundaries.
